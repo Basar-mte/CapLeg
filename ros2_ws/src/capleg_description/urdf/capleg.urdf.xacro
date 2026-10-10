@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!--
+  CapLeg - capstan-driven powered transfemoral prosthesis (research platform)
+
+  xacro args
+    config           transfemoral | transtibial   (transtibial = ankle-foot module only)
+    rig              true | false                  treadmill hip simulator (world-fixed)
+    sim              none | gazebo                 adds ros2_control + Gazebo Harmonic plugins/sensors
+    controllers_file path to the ros2_control controller YAML (used when sim:=gazebo)
+
+  Examples
+    xacro capleg.urdf.xacro config:=transfemoral rig:=false sim:=none
+    xacro capleg.urdf.xacro rig:=true sim:=gazebo controllers_file:=/path/controllers.yaml
+-->
+<robot name="capleg" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="config" default="transfemoral"/>
+  <xacro:arg name="rig" default="false"/>
+  <xacro:arg name="sim" default="none"/>
+  <xacro:arg name="controllers_file" default=""/>
+  <xacro:property name="config" value="$(arg config)"/>
+
+  <xacro:include filename="$(find capleg_description)/urdf/capleg_macro.xacro"/>
+  <xacro:include filename="$(find capleg_description)/urdf/rig.xacro"/>
+  <xacro:include filename="$(find capleg_description)/urdf/capleg.ros2_control.xacro"/>
+  <xacro:include filename="$(find capleg_description)/urdf/capleg.gazebo.xacro"/>
+
+  <xacro:capleg config="${config}"/>
+  <xacro:if value="$(arg rig)">
+    <xacro:capleg_rig config="${config}"/>
+  </xacro:if>
+  <xacro:if value="${'$(arg sim)' == 'gazebo'}">
+    <xacro:capleg_ros2_control config="${config}" rig="$(arg rig)"/>
+    <xacro:capleg_gazebo controllers_file="$(arg controllers_file)" config="${config}"/>
+  </xacro:if>
+</robot>

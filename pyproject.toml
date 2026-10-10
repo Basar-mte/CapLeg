@@ -1,0 +1,25 @@
+# Tool configuration only - CapLeg is not a pip-installable package.
+# The ROS 2 packages are built with colcon (ros2_ws/), everything else runs as plain scripts.
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "ros2_ws/src/capleg_control/test"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+extend-exclude = [
+    "ros2_ws/build", "ros2_ws/install", "ros2_ws/log",
+    "cad/fusion",          # runs inside Fusion 360's embedded Python (adsk.* modules)
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B"]
+ignore = ["E741"]          # short physics names such as l, I are intentional
+
+[tool.ruff.lint.isort]
+known-first-party = ["capleg_control"]
+known-third-party = ["mujoco"]             # not the repo's mujoco/ folder
+
+[tool.ruff.lint.per-file-ignores]
+"tools/build_sim_models.py" = ["E501"]     # long lines are XML templates of the generated files

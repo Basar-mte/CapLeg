@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!-- Treadmill hip simulator: world -> rig_x (belt progression) -> rig_z (vertical hip) -> hip (thigh angle).
+     The prosthesis is attached at the hip (transfemoral) or at the residual-knee level (transtibial). -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="capleg_rig" params="config">
+    <link name="world"/>
+    <!-- rig_base needs mass: sdformat drops zero-mass links when converting URDF -> SDF -->
+    <link name="rig_base">
+      <inertial><mass value="10.0"/><inertia ixx="1.0" ixy="0" ixz="0" iyy="1.0" iyz="0" izz="1.0"/></inertial>
+    </link>
+    <joint name="rig_base_joint" type="fixed"><parent link="world"/><child link="rig_base"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/></joint>
+    <link name="rig_carriage_x">
+      <inertial><origin xyz="0 0 0.94"/><mass value="5.0"/>
+        <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/></inertial>
+    </link>
+    <joint name="rig_x" type="prismatic"><parent link="rig_base"/><child link="rig_carriage_x"/>
+      <origin xyz="0 0 0"/><axis xyz="1 0 0"/><limit lower="-5.0" upper="500.0" effort="5000" velocity="5.0"/></joint>
+    <link name="rig_hip_carriage">
+      <inertial><origin xyz="0 0 0"/><mass value="2.0"/>
+        <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/></inertial>
+      <visual><geometry><box size="0.08 0.16 0.04"/></geometry><material name="capleg_graphite"/></visual>
+    </link>
+    <xacro:property name="hip_z" value="${0.94 if config == 'transfemoral' else 0.51}"/>
+    <joint name="rig_z" type="prismatic"><parent link="rig_carriage_x"/><child link="rig_hip_carriage"/>
+      <origin xyz="0 0 ${hip_z}"/><axis xyz="0 0 1"/><limit lower="-0.25" upper="0.10" effort="3000" velocity="3.0"/>
+      <dynamics damping="0.0" friction="0.0"/></joint>
+    <xacro:if value="${config == 'transfemoral'}">
+      <joint name="hip" type="revolute"><parent link="rig_hip_carriage"/><child link="capleg_thigh"/>
+        <origin xyz="0 0 0"/><axis xyz="0 -1 0"/><limit lower="-0.6" upper="0.9" effort="400" velocity="8.0"/></joint>
+    </xacro:if>
+    <xacro:unless value="${config == 'transfemoral'}">
+      <!-- transtibial: the rig 'hip' joint becomes the residual knee driving the shank (shank-angle phase) -->
+      <joint name="hip" type="revolute"><parent link="rig_hip_carriage"/><child link="capleg_shank"/>
+        <origin xyz="0 0 0"/><axis xyz="0 -1 0"/><limit lower="-1.2" upper="0.9" effort="400" velocity="8.0"/></joint>
+    </xacro:unless>
+  </xacro:macro>
+</robot>

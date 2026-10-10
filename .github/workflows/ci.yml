@@ -1,0 +1,83 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python:
+    name: Python core + MuJoCo (${{ matrix.os }}, py${{ matrix.python }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: ubuntu-latest, python: '3.10' }
+          - { os: ubuntu-latest, python: '3.12' }
+          - { os: windows-latest, python: '3.12' }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+          cache-dependency-path: requirements*.txt
+      - name: Install
+        run: pip install -r requirements-dev.txt
+      - name: Lint
+        run: ruff check .
+      - name: Tests (core unit tests, model consistency, closed-loop MuJoCo smoke run)
+        run: pytest
+      - name: Generated models are reproducible from the CAD export
+        if: runner.os == 'Linux'
+        run: |
+          python tools/build_sim_models.py
+          git status --porcelain
+          git diff --exit-code --stat
+
+  ros2:
+    name: ROS 2 Jazzy build + test
+    runs-on: ubuntu-24.04
+    container: ros:jazzy-ros-base
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends python3-pytest liburdfdom-tools
+          rosdep update --rosdistro jazzy
+          rosdep install --from-paths ros2_ws/src --ignore-src -y --rosdistro jazzy
+      - name: colcon build
+        working-directory: ros2_ws
+        run: |
+          source /opt/ros/jazzy/setup.bash
+          colcon build --event-handlers console_direct+
+      - name: colcon test
+        working-directory: ros2_ws
+        run: |
+          source /opt/ros/jazzy/setup.bash
+          source install/setup.bash
+          colcon test --event-handlers console_direct+
+          colcon test-result --verbose
+      - name: Validate URDF (every config, with the Gazebo extensions)
+        working-directory: ros2_ws
+        run: |
+          source /opt/ros/jazzy/setup.bash
+          source install/setup.bash
+          share=$(ros2 pkg prefix capleg_description)/share/capleg_description/urdf
+          for config in transfemoral transtibial; do
+            for rig in true false; do
+              xacro "$share/capleg.urdf.xacro" config:=$config rig:=$rig sim:=gazebo \
+                controllers_file:=/tmp/controllers.yaml > /tmp/capleg_${config}_${rig}.urdf
+              check_urdf /tmp/capleg_${config}_${rig}.urdf
+            done
+          done

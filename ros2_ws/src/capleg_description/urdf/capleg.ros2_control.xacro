@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<!-- ros2_control for Gazebo Harmonic (gz_ros2_control). Prosthesis joints are torque (effort) controlled by
+     capleg_control/controller_node (phase-based impedance). Rig: rig_x / hip position, rig_z effort (load servo). -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="capleg_ros2_control" params="config rig">
+    <ros2_control name="CapLegSystem" type="system">
+      <hardware>
+        <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+        <param name="position_proportional_gain">0.5</param>
+      </hardware>
+      <xacro:if value="${rig}">
+      <joint name="rig_x">
+        <command_interface name="position">
+          <param name="min">-5</param>
+          <param name="max">500</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">0</param>
+        </state_interface>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+      <joint name="hip">
+        <command_interface name="position">
+          <param name="min">-1.2</param>
+          <param name="max">0.9</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">0</param>
+        </state_interface>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+      <joint name="rig_z">
+        <command_interface name="effort">
+          <param name="min">-3000</param>
+          <param name="max">3000</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">0</param>
+        </state_interface>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+      </xacro:if>
+      <xacro:if value="${config == 'transfemoral'}">
+      <joint name="knee">
+        <command_interface name="effort">
+          <param name="min">-102.345</param>
+          <param name="max">102.345</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">0</param>
+        </state_interface>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+      </xacro:if>
+      <joint name="ankle_pitch">
+        <command_interface name="effort">
+          <param name="min">-176.505</param>
+          <param name="max">111.055</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">0</param>
+        </state_interface>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+      <joint name="ankle_roll">
+        <command_interface name="effort">
+          <param name="min">-60</param>
+          <param name="max">60</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">0</param>
+        </state_interface>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+      <joint name="toe">
+        <command_interface name="effort">
+          <param name="min">-35</param>
+          <param name="max">35</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">0</param>
+        </state_interface>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+    </ros2_control>
+  </xacro:macro>
+</robot>

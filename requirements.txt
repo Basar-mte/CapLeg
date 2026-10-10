@@ -1,0 +1,8 @@
+# Runtime packages for the MuJoCo rig, the GIF renderer and the model generator (Python >= 3.10).
+# ROS 2 is installed separately (see docs/SOFTWARE_SETUP.md).
+mujoco>=3.2
+numpy>=1.24
+scipy>=1.10
+trimesh>=4.0
+matplotlib>=3.7
+pillow>=10.0

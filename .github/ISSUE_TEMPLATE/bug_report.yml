@@ -1,0 +1,30 @@
+name: Bug report
+description: Something in the CAD, simulation, ROS 2 packages or docs does not work as described
+labels: [bug]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options: [MuJoCo, ROS 2 / Gazebo, CAD / Fusion 360, Model generator, Hardware build, Documentation]
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Commands you ran, including any arguments
+      render: bash
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      placeholder: "Ubuntu 24.04 / Windows 11, Python 3.12, mujoco 3.3, ROS 2 Jazzy"

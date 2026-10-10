@@ -1,0 +1,15 @@
+name: Build report / question
+description: Share your physical build, ask about printing or assembly, or report a fit problem
+labels: [hardware]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What are you building or asking about?
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: Parts (P/H codes), materials, printer, photos, measurements

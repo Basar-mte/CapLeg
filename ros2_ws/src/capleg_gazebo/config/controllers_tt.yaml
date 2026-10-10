@@ -1,0 +1,24 @@
+# ros2_control controllers - CapLeg transtibial (ankle-foot module) on the treadmill rig (Gazebo Harmonic)
+# The rig 'hip' joint drives the residual shank angle.
+controller_manager:
+  ros__parameters:
+    update_rate: 1000  # Hz
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    capleg_effort_controller:
+      type: forward_command_controller/ForwardCommandController
+
+    rig_position_controller:
+      type: forward_command_controller/ForwardCommandController
+
+capleg_effort_controller:
+  ros__parameters:
+    joints: [rig_z, ankle_pitch, ankle_roll, toe]
+    interface_name: effort
+
+rig_position_controller:
+  ros__parameters:
+    joints: [rig_x, hip]
+    interface_name: position

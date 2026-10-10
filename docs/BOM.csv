@@ -1,0 +1,19 @@
+item,qty,description,specification / example,where,notes
+H30/H31,2,Quasi-direct-drive actuator,CubeMars AK80-9 V3.0 KV100 (48 V; 9:1; 22 N m peak / 9 N m rated; 485 g; D98 x 38.5 mm; CAN MIT mode),knee + ankle drive,Add the vendor stator bolt pattern to P05/P11 (only the hub clearance is modelled)
+CAB,~2 m,Capstan cable,UHMWPE (Dyneema SK78/SK99) 12-strand braid D2.5 mm; break >= 6 kN,knee + ankle capstans,Peak tension ~1.8 kN at actuator peak torque; pre-tension; terminate at disc/sector ends; inspect for creep
+H10,4,Deep-groove ball bearing,6001-2RS (12 x 28 x 8 mm),knee + ankle axles (in side plates),
+H10b,2,Deep-groove ball bearing,6000-2RS (10 x 26 x 8 mm),capstan drum outboard support (medial plates),Carries the cable side-load off the actuator output bearing
+H51,2,Deep-groove ball bearing,608-2RS (8 x 22 x 7 mm),subtalar (roll) boss in foot keel,
+H01,1,Knee axle,D12 h6 ground steel shaft x 76 mm with key flat,knee,Keyed to knee head + capstan disc
+H40,1,Ankle axle,D12 h6 ground steel shaft x 88 mm with key flat,ankle,Lateral end drives the PEA cartridge
+H42,1,Roll axle,D8 h6 steel shaft x 82 mm,subtalar,Retain with circlips
+H50,1,Toe pin,D5 steel pin x 80 mm,MTP hinge,
+H20,1,Pylon,D30 x 2 mm aluminium tube (7075-T6 or 6061-T6); 136 mm for the default 510 mm build height,shank,Cut to length for the user; standard 30 mm prosthetic clamps fit
+H21,1,6-axis load cell,D <= 60 mm x 20 mm; Fz >= 2.5 kN; Mx/My >= 150 N m (e.g. a commercial 6-axis F/T sensor of that class),between pylon clamp and ankle frame,Use its bolt pattern for P13/P17
+H11,2,Frame spacer,D12/D9 aluminium standoff x 54 mm + M5/M4 bolts,knee frame,
+H12,1,Electronics stack,MCU (e.g. Teensy 4.1 or STM32) + CAN transceiver + 3 IMUs (thigh / shank / foot) + encoder inputs,shank (knee frame bay),Thigh IMU sits in the knee-head pocket
+PEA,1,Ankle parallel spring,Torsion spring cartridge ~250 N m/rad engaging at 0 deg dorsiflexion (or carbon/GFRP leaf),P16 cartridge on lateral ankle axle,Unilateral: no torque in plantarflexion
+TOE,1,MTP spring,~45 N m/rad total (2 torsion springs on the toe pin or a TPU strap),toe hinge,Tune with the toe pad durometer
+FAST,1 set,Fasteners,M5 x 60 (frame/clamp) x8; M5 x 16 (disc) x6; M4 x 20 (sector) x6; M6 x 25 (socket base) x4; M8 set screws x4 (pyramid receiver); M5 clamp bolt (ankle pylon clamp) x1,all,Use threaded inserts in printed parts
+PWR,1,Power,48 V bench supply (tethered) or 12S Li-ion pack with BMS + E-stop,off-board,Add a hardware E-stop and current limits for every test
+PRINT,26,Printed parts,see cad/stl_print/print_report.csv,all,PA-CF or PETG-CF structure; TPU 85A-95A pads/springs; PETG check socket

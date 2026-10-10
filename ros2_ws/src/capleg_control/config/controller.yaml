@@ -1,0 +1,24 @@
+# CapLeg controller parameters (ros2 run capleg_control capleg_controller --ros-args --params-file <this file>)
+# Defaults mirror capleg_control/core/params.py. All gains can also be changed live with `ros2 param set`.
+capleg_controller:
+  ros__parameters:
+    config: transfemoral          # transfemoral | transtibial
+    rate: 500.0                   # control loop [Hz] (sim time)
+    stride_time: 1.2              # rig stride time [s] -> belt speed ~1.24 m/s
+    body_mass: 75.0               # user mass for load and feed-forward scaling [kg]
+    phase_source: thigh           # thigh (phase-portrait estimator) | time (rig clock)
+    software_passive: true        # emulate TPU roll springs, toe springs and ankle PEA (Gazebo has none)
+    start_delay: 3.0              # [s] lift foot + ramp to heel-strike posture before walking
+    knee:
+      k_stance: 650.0             # [N m/rad]
+      b_stance: 10.0              # [N m s/rad]
+      k_swing: 140.0
+      b_swing: 6.0
+    ankle:
+      k_stance: 450.0
+      b_stance: 8.0
+      k_swing: 150.0
+      b_swing: 6.0
+    ankle_ff_scale: 0.55          # x normative plantarflexor moment
+    knee_ff_scale: 0.15
+    inertia_ff: true              # cancel reflected rotor inertia in swing

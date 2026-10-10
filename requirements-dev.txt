@@ -1,0 +1,5 @@
+# Everything in requirements.txt plus test and lint tools
+-r requirements.txt
+pytest>=7.0
+ruff>=0.5
+xacro>=2.0          # expands the ROS 2 xacro files in the tests without a ROS install

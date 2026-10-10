@@ -1,0 +1,10 @@
+{
+  "autodeskProduct": "Fusion",
+  "type": "script",
+  "author": "Md. Abul Basar Roky",
+  "description": {
+    "": "Export the open CapLeg design (STL per body, STEP, F3D, metadata) for tools/build_sim_models.py"
+  },
+  "supportedOS": "windows|mac",
+  "editEnabled": true
+}

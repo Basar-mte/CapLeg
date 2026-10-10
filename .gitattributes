@@ -1,0 +1,18 @@
+# Normalise line endings so the repo behaves the same on Windows, Linux and macOS
+* text=auto eol=lf
+
+# Binary assets (never diff or convert)
+*.stl   binary
+*.f3d   binary
+*.png   binary
+*.gif   binary
+*.jpg   binary
+*.step  -diff linguist-generated
+
+# Files written by tools/build_sim_models.py or the CAD export (collapsed in GitHub diffs)
+cad/fusion_export_meta.json                                   linguist-generated
+cad/stl_print/print_report.csv                                linguist-generated
+mujoco/capleg_rig.xml                                         linguist-generated
+mujoco/results/**                                             linguist-generated
+ros2_ws/src/capleg_description/urdf/generated/**              linguist-generated
+ros2_ws/src/capleg_description/config/mass_properties.yaml    linguist-generated

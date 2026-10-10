@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!-- Gazebo Harmonic extensions: ros2_control plugin, foot friction, sensors (IMUs, 6-axis load cell). -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="capleg_gazebo" params="controllers_file config">
+    <gazebo>
+      <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+        <parameters>${controllers_file}</parameters>
+      </plugin>
+    </gazebo>
+    <!-- DART reads friction only (kp/kd/minDepth are ODE-specific and ignored) -->
+    <xacro:macro name="foot_surface" params="link">
+      <gazebo reference="${link}">
+        <mu1>1.0</mu1>
+        <mu2>1.0</mu2>
+      </gazebo>
+    </xacro:macro>
+    <xacro:foot_surface link="capleg_foot"/>
+    <xacro:foot_surface link="capleg_toe"/>
+    <!-- keep the load-cell joint so the force-torque sensor has a joint to measure -->
+    <gazebo reference="load_cell_joint">
+      <preserveFixedJoint>true</preserveFixedJoint>
+      <sensor name="load_cell" type="force_torque">
+        <always_on>true</always_on>
+        <update_rate>500</update_rate>
+        <topic>capleg/load_cell</topic>
+        <force_torque><frame>child</frame><measure_direction>child_to_parent</measure_direction></force_torque>
+      </sensor>
+    </gazebo>
+    <xacro:macro name="imu" params="link name">
+      <gazebo reference="${link}">
+        <sensor name="${name}" type="imu">
+          <always_on>true</always_on>
+          <update_rate>500</update_rate>
+          <topic>capleg/${name}</topic>
+          <imu>
+            <angular_velocity>
+              <x><noise type="gaussian"><mean>0</mean><stddev>0.002</stddev></noise></x>
+              <y><noise type="gaussian"><mean>0</mean><stddev>0.002</stddev></noise></y>
+              <z><noise type="gaussian"><mean>0</mean><stddev>0.002</stddev></noise></z>
+            </angular_velocity>
+            <linear_acceleration>
+              <x><noise type="gaussian"><mean>0</mean><stddev>0.02</stddev></noise></x>
+              <y><noise type="gaussian"><mean>0</mean><stddev>0.02</stddev></noise></y>
+              <z><noise type="gaussian"><mean>0</mean><stddev>0.02</stddev></noise></z>
+            </linear_acceleration>
+          </imu>
+        </sensor>
+      </gazebo>
+    </xacro:macro>
+    <!-- sensors on the fixed IMU frames: sdformat lumps them into the parent link with the correct offset -->
+    <xacro:if value="${config == 'transfemoral'}">
+      <xacro:imu link="capleg_thigh_imu_link" name="thigh_imu"/>
+    </xacro:if>
+    <xacro:imu link="capleg_shank_imu_link" name="shank_imu"/>
+    <xacro:imu link="capleg_foot_imu_link" name="foot_imu"/>
+  </xacro:macro>
+</robot>

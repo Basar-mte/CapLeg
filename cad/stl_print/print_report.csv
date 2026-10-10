@@ -1,0 +1,27 @@
+part,material,x_mm,y_mm,z_mm,volume_cm3,watertight,fits_256x256x256,fits_250x210x220,est_mass_g
+P03_KneeHead,PA-CF or PETG-CF (structural),56.0,111.0,50.0,174.0,True,True,True,139.0
+P04_KneeCapstanDisc,Al 6061 (recommended) or PA-CF,120.0,120.0,13.5,113.6,True,True,True,307.0
+P02_PyramidReceiver,Al 7075 / Ti (clinical); PA-CF for bench prototypes,50.0,50.0,23.5,35.3,True,True,True,95.0
+P01_Socket,PETG (clear) check socket - patient specific in practice,146.4,138.2,296.0,421.4,True,False,False,535.0
+P05_KneePlate_Lat,PA-CF or PETG-CF (structural),138.0,256.0,8.0,205.8,True,True,False,165.0
+P06_KneePlate_Med,PA-CF or PETG-CF (structural),138.0,256.0,8.0,211.6,True,True,False,169.0
+P08_KneeCover_Lat,PETG / ASA,128.0,246.0,3.0,70.8,True,True,True,81.0
+P09_KneeCover_Med,PETG / ASA,128.0,246.0,3.0,70.8,True,True,True,81.0
+P11_AnklePlate_Lat,PA-CF or PETG-CF (structural),163.4,163.4,8.0,135.4,True,True,True,108.0
+P12_AnklePlate_Med,PA-CF or PETG-CF (structural),163.4,163.4,8.0,141.3,True,True,True,113.0
+P14_AnkleCover_Lat,PETG / ASA,153.4,153.4,3.0,46.9,True,True,True,54.0
+P15_AnkleCover_Med,PETG / ASA,153.4,153.4,3.0,46.9,True,True,True,54.0
+P07_KneeClamp,PA-CF or PETG-CF (structural),64.0,54.0,38.0,100.3,True,True,True,80.0
+P10_CapstanDrum,Al 6061 (recommended) or PA-CF,22.0,22.0,22.5,5.5,True,True,True,15.0
+P13_AnkleTopBlock,PA-CF or PETG-CF (structural),44.0,54.0,12.0,25.1,True,True,True,20.0
+P17_PylonClamp_Ankle,PA-CF or PETG-CF (structural),58.0,48.0,30.0,37.3,True,True,True,30.0
+P18_CapstanDrum,Al 6061 (recommended) or PA-CF,22.0,22.0,22.5,5.5,True,True,True,15.0
+P16_PEA_SpringCartridge,PA-CF housing + steel torsion spring,48.0,48.0,14.0,21.3,True,True,True,100.0
+P19_Talus,PA-CF or PETG-CF (structural),80.0,52.0,84.0,113.3,True,True,True,91.0
+P20_AnkleCapstanSector,Al 6061 (recommended) or PA-CF,105.1,102.5,13.5,74.2,True,True,True,200.0
+P21_FootKeel,PA-CF or PETG-CF (structural),195.5,87.4,54.0,214.3,True,True,True,171.0
+P22_SolePad_TPU,TPU 95A,186.0,88.0,6.0,75.5,True,True,True,53.0
+P23_RollSpring_TPU_Med,TPU 85A-95A,20.0,9.0,37.5,6.8,True,True,True,7.0
+P23_RollSpring_TPU_Lat,TPU 85A-95A,20.0,9.0,37.5,6.8,True,True,True,7.0
+P24_Toe,PA-CF or PETG-CF,78.0,86.5,11.0,42.8,True,True,True,43.0
+P25_ToePad_TPU,TPU 95A,71.5,87.6,6.0,32.2,True,True,True,23.0

@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use CapLeg in your research, please cite it as below."
+title: "CapLeg: a capstan-driven powered knee-ankle prosthesis research platform"
+type: software
+authors:
+  - family-names: "Roky"
+    given-names: "Md. Abul Basar"
+    email: "m.a.basar.mte@gmail.com"
+repository-code: "https://github.com/Basar-mte/CapLeg"
+license: Apache-2.0
+version: 1.0.0
+date-released: 2026-10-10
+keywords:
+  - powered prosthesis
+  - transfemoral prosthesis
+  - capstan drive
+  - quasi-direct drive
+  - impedance control
+  - gait phase estimation
+  - ROS 2
+  - MuJoCo
+  - Gazebo
