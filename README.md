@@ -3,7 +3,7 @@
 # CapLeg
 
 **An open, 3D-printable, capstan-driven powered knee–ankle prosthesis: from parametric CAD to closed-loop
-simulation in MuJoCo, ROS 2 and Gazebo.**
+simulation in MuJoCo.**
 
 [![CI](https://github.com/Basar-mte/CapLeg/actions/workflows/ci.yml/badge.svg)](https://github.com/Basar-mte/CapLeg/actions/workflows/ci.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
